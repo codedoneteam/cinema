@@ -1,0 +1,3 @@
+package cinema.transaction.exception
+
+class TransactionException extends Exception

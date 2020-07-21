@@ -1,0 +1,3 @@
+package cinema.transaction.exception
+
+class ClosureException extends RuntimeException

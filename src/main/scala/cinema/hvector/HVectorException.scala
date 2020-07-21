@@ -1,0 +1,3 @@
+package cinema.hvector
+
+class HVectorException extends RuntimeException
