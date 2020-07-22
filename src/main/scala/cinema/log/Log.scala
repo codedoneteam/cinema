@@ -4,6 +4,7 @@ import akka.actor.typed.scaladsl.ActorContext
 
 import scala.util.{Failure, Success, Try}
 
+
 class Log(context: ActorContext[_]) {
 
   def trace[A](text: A): Unit = if (context.log.isTraceEnabled()) {
@@ -28,4 +29,8 @@ class Log(context: ActorContext[_]) {
         case Success(v) => v
         case Failure(e) => e.getMessage
     }
+}
+
+object Log {
+  def apply(context: ActorContext[_]): Log = new Log(context)
 }

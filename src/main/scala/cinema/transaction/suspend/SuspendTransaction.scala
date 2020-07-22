@@ -22,8 +22,8 @@ trait SuspendTransaction[In, Out] extends AbstractTransaction[In, Out] with Susp
   def execute[A <: In](f: ActorRef[Message[A]] => Log => A => Commit[A])(implicit sc: SagaContext[A], typeTag: TypeTag[A]): Behavior[Message[A]] = {
     val f2: TimerScheduler[Message[A]] => ActorRef[Message[A]] => Log => A => Commit[A] = _ => f
     tx(f2){ e => timers => {
-      timers.cancelAll()
-      revert(e)
+        timers.cancelAll()
+        revert(e)
       }
     }
   }
@@ -46,9 +46,9 @@ trait SuspendTransaction[In, Out] extends AbstractTransaction[In, Out] with Susp
         }
     }
     tx(f2){ e => timers => {
-      timers.cancelAll()
-      revert(e)
-    }
+        timers.cancelAll()
+        revert(e)
+      }
     }
   }
 

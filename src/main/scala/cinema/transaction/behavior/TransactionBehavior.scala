@@ -27,9 +27,9 @@ trait TransactionBehavior[In, Out] extends ExecutionBehavior with ApplyBehavior[
               message match {
                 case Payload(data) =>
                   timers.startSingleTimer(Timeout, timeout(sc))
-                  f(timers)(ctx.self)(new Log(ctx))(data)
+                  f(timers)(ctx.self)(Log(ctx))(data)
                 case Timeout => throw new TransactionTimeoutException
-                case Fail(e) =>throw e
+                case Fail(e) => throw e
               }
              } match {
                 case Success(out) => out.behavior
