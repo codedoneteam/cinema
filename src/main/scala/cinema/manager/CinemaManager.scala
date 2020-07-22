@@ -39,12 +39,16 @@ object CinemaManager {
       case ProduceRef(behavior, name, promise, typeTag) =>
         val actorRef = ctx.spawn(behavior = behavior, name = name)
         promise.complete(Try(actorRef))
-        apply(sagaOrchestrator = sagaOrchestrator, actorRefs = actorRefs + (typeTag -> actorRef), executorPollSize = executorPollSize)
+        apply(sagaOrchestrator = sagaOrchestrator,
+          actorRefs = actorRefs + (typeTag -> actorRef),
+          executorPollSize = executorPollSize)
 
       case StartSaga(tx, sagaContext, dispatcherSelector, msg) =>
         val ref = sagaOrchestrator.getOrElse(ctx.spawn(SagaOrchestrator(cinemaManager = ctx.self, executorPollSize = executorPollSize), "cinema-saga-orchestrator"))
         ref ! Start(tx, sagaContext, dispatcherSelector, msg)
-        apply(Some(ref), executorPollSize = executorPollSize)
+        apply(sagaOrchestrator = Some(ref),
+          actorRefs = actorRefs,
+          executorPollSize = executorPollSize)
 
       case Selection(typeTag, behavior, promise) =>
         actorRefs.get(typeTag) match {
@@ -54,7 +58,9 @@ object CinemaManager {
           case _ =>
             val actorRef = ctx.spawn(behavior = behavior(), name = typeTag.tpe.toString)
             promise.complete(Try(actorRef.asInstanceOf[ActorRef[Any]]))
-            apply(sagaOrchestrator = sagaOrchestrator, actorRefs = actorRefs + (typeTag -> actorRef), executorPollSize = executorPollSize)
+            apply(sagaOrchestrator = sagaOrchestrator,
+              actorRefs = actorRefs + (typeTag -> actorRef),
+              executorPollSize = executorPollSize)
         }
     }
   })
