@@ -1,6 +1,7 @@
 package cinema.config.load
 
 import java.io.File
+
 import cinema.config.LoadableConfig
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 

@@ -8,7 +8,6 @@ import cinema.saga.Saga
 import cinema.saga.direction.{Forward, Reverse}
 import cinema.transaction.AbstractTransaction
 
-import scala.concurrent.duration.Duration
 import scala.reflect.runtime.universe.TypeTag
 
 
