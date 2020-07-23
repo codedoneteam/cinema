@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 import akka.actor.typed.DispatcherSelector
+import cinema.config.Config.$
 import cinema.hvector.HVector.HNil
 import cinema.saga.context.SagaContext
 import cinema.stateful.TestMessage

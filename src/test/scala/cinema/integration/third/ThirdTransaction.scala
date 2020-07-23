@@ -1,6 +1,6 @@
 package cinema.integration.third
 
-import cinema.config.$
+import cinema.config.Config.$
 import cinema.integration.config.Data
 import cinema.integration.messages.SecondThird.{SecondThirdMessage, Third}
 import cinema.log.Log

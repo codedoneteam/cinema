@@ -44,6 +44,7 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-slf4j" % akka,
       "com.chuusai" %% "shapeless" % "2.4.0-M1",
       "ch.qos.logback" % "logback-classic" % "1.1.3",
+      "org.eclipse.jgit" % "org.eclipse.jgit" % "5.4.0.201906121030-r",
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % akka % Test,
       "org.scalatest" %% "scalatest" % "3.0.8" % Test)
   )
