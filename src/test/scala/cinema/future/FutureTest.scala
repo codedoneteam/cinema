@@ -13,6 +13,7 @@ class FutureTest extends FlatSpec with CinemaAware {
   "Future Transaction" should "commit" in {
     val future = SagaBuilder()
       .transaction(FutureTransaction)
+      .build()
       .duration(100 seconds)
       .run(1)
 

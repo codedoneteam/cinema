@@ -17,6 +17,7 @@ class RetryTest extends FlatSpec with CinemaAware {
   "Retry" should "complete" in {
     val future = SagaBuilder()
       .transaction(SomeRetryTransaction, blocking)
+      .build()
       .duration(10 seconds)
       .run(InMessage())
 
@@ -27,6 +28,7 @@ class RetryTest extends FlatSpec with CinemaAware {
   "Some retry" should "throw exception" in {
     val future = SagaBuilder()
       .transaction(SomeRetryTransaction, blocking)
+      .build()
       .duration(10 seconds)
       .run(SecondInMessage())
 

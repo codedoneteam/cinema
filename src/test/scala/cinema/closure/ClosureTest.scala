@@ -16,6 +16,7 @@ class ClosureTest extends FlatSpec with CinemaAware {
     val immutableSharedState = 42
     val future = SagaBuilder(immutableSharedState)
       .transaction(SomeClosureTransaction, blocking)
+      .build()
       .duration(100 seconds)
       .run(InMessage())
 

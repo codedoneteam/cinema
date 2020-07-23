@@ -18,6 +18,7 @@ class SagaFailureTest extends FlatSpec with CinemaAware {
   "Saga" should "failure" in {
     val future = SagaBuilder()
       .transaction(SomeFailureTransaction)
+      .build()
       .duration(100 seconds)
       .run(InMessage(42))
 

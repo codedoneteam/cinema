@@ -15,6 +15,7 @@ class StatelessTest extends FlatSpec with CinemaAware {
   "Retry" should "complete" in {
     val future = SagaBuilder()
       .transaction(SomeStatelessTransaction, blocking)
+      .build()
       .duration(100 seconds)
       .run(InMessage())
 

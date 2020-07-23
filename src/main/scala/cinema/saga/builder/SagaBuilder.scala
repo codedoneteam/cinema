@@ -11,13 +11,13 @@ import cinema.transaction.AbstractTransaction
 import scala.reflect.runtime.universe.TypeTag
 
 
-class SagaBuilder(val cinemaManager: CinemaManager, closure: HVector) {
+class SagaBuilder(cinemaManager: CinemaManager, closure: HVector) {
   def transaction[In, Out](tx: AbstractTransaction[In, Out],
                            ds: DispatcherSelector = defaultDispatcher())
                           (implicit in: TypeTag[In], out: TypeTag[Out]): TransactionsSagaBuilder[In, Out] = {
     val forward = Forward(tx, ds) :: HNil
     val reverse = Reverse(tx, ds) :: HNil
-    new TransactionsSagaBuilder[In, Out](new Saga[In, Out](cinemaManager = cinemaManager,
+    TransactionsSagaBuilder[In, Out](new Saga[In, Out](cinemaManager = cinemaManager,
                                                            forward = forward,
                                                            reverse = reverse,
                                                            closure = closure), cinemaManager = cinemaManager)

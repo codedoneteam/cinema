@@ -17,6 +17,7 @@ class SelectionAwareTransactionTest extends FlatSpec with CinemaAware {
     actorOf(Calc()) { ref =>
       val future = SagaBuilder(ref)
         .transaction(SelectionAwareTransaction)
+        .build()
         .duration(100 seconds)
         .run(One(42))
       promise.completeWith(future)

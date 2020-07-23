@@ -24,6 +24,7 @@ class IntegrationTest extends FlatSpec with CinemaAware {
       .transaction(FirstTransaction)
       .transaction(SecondTransaction, blocking)
       .transaction(ThirdTransaction)
+      .build()
       .duration(100 seconds)
       .run(First(1))
 
@@ -36,6 +37,7 @@ class IntegrationTest extends FlatSpec with CinemaAware {
       .transaction(FirstTransaction)
       .transaction(SecondTransaction, blocking)
       .transaction(ThirdTransaction)
+      .build()
       .duration(1000 seconds, compensateDuration = 30 seconds)
       .run(First(-1))
 
@@ -55,6 +57,7 @@ class IntegrationTest extends FlatSpec with CinemaAware {
       .transaction(FirstTransaction)
       .transaction(SecondTransaction, blocking)
       .transaction(ThirdTransaction)
+      .build()
       .duration(duration = 3 seconds, compensateDuration = 15 seconds)
       .run(First(0))
 

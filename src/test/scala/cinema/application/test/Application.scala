@@ -12,6 +12,7 @@ object Application extends CinemaApp {
 
     val future = SagaBuilder()
       .transaction(OneTransaction)
+      .build()
       .duration(10 seconds)
       .run(Process)
 

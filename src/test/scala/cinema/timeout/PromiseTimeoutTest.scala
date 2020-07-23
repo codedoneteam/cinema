@@ -18,6 +18,7 @@ class PromiseTimeoutTest extends FlatSpec with CinemaAware {
 
     val future = SagaBuilder()
       .transaction(PromiseTransaction)
+      .build()
       .duration(1 seconds)
       .run(InPromiseMessage(-1, promise))
 
@@ -32,6 +33,7 @@ class PromiseTimeoutTest extends FlatSpec with CinemaAware {
 
     val future = SagaBuilder()
       .transaction(PromiseTransaction)
+      .build()
       .duration(1 seconds)
       .run(InPromiseMessage(0, promise))
 
@@ -46,6 +48,7 @@ class PromiseTimeoutTest extends FlatSpec with CinemaAware {
 
     val future = SagaBuilder()
       .transaction(PromiseTransaction)
+      .build()
       .duration(1 seconds)
       .run(InPromiseMessage(1, promise))
 
@@ -60,6 +63,7 @@ class PromiseTimeoutTest extends FlatSpec with CinemaAware {
 
     val future = SagaBuilder()
       .transaction(PromiseStatefulTransaction)
+      .build()
       .duration(1 seconds)
       .run(InPromiseMessage(2, promise))
 

@@ -8,10 +8,10 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Future, Promise}
 import scala.reflect.runtime.universe.TypeTag
 
-class RunnableSaga[In, Out](val saga: Saga[In, Out],
-                            val cinemaManager: CinemaManager,
-                            val duration: Duration,
-                            val compensateDuration: Duration) {
+class RunnableSaga[In, Out](saga: Saga[In, Out],
+                            cinemaManager: CinemaManager,
+                            duration: Duration,
+                            compensateDuration: Duration) {
 
   def run(message: In)(implicit config: Config, typeTag: TypeTag[In]): Future[Out] = {
     val promise = Promise[Out]()
@@ -24,5 +24,13 @@ class RunnableSaga[In, Out](val saga: Saga[In, Out],
              closure = saga.closure)
     promise.future
   }
+
+}
+
+object RunnableSaga {
+  def apply[In, Out](saga: Saga[In, Out],
+            cinemaManager: CinemaManager,
+            duration: Duration,
+            compensateDuration: Duration): RunnableSaga[In, Out] = new RunnableSaga(saga, cinemaManager, duration, compensateDuration)
 
 }
