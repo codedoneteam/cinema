@@ -50,9 +50,9 @@ trait ApplyBehavior[In, Out] {
             message = Payload(sc.in))
           sc.executor ! task
         case _ =>
-          sc.promise.failure(exception)
+          if (!sc.promise.isCompleted) sc.promise.failure(exception)
       }
-      throw exception
+      stopped[Message[A]]
     }
 
     private def backward(out: Out)(implicit sc: SagaContext[In], typeTag: TypeTag[In], typeTag2: TypeTag[Out]): Behavior[Message[In]] = {
