@@ -16,28 +16,37 @@ import scala.language.postfixOps
 
 class ConfigTest extends WordSpecLike {
 
+  implicit val sc: SagaContext[TestMessage.First.type] = SagaContext(in = null,
+    system = null,
+    dispatcherSelector = DispatcherSelector.defaultDispatcher(),
+    id = UUID.randomUUID(),
+    executionExpired = LocalDateTime.now().plusSeconds(100),
+    duration = 100 seconds,
+    compensateDuration = 100 seconds,
+    executor = null,
+    config = ConfigFactory.load(),
+    forward = HNil,
+    reverse = HNil,
+    promise = Promise(),
+    messages = HNil,
+    closure = HNil)
+
   "Config" must {
     "create instance" in {
-      val config = ConfigFactory.load()
-      implicit val sc: SagaContext[TestMessage.First.type] = SagaContext(in = null,
-                            system = null,
-                            dispatcherSelector = DispatcherSelector.defaultDispatcher(),
-                            id = UUID.randomUUID(),
-                            executionExpired = LocalDateTime.now().plusSeconds(100),
-                            duration = 100 seconds,
-                            compensateDuration = 100 seconds,
-                            executor = null,
-                            config = config,
-                            forward = HNil,
-                            reverse = HNil,
-                            promise = Promise(),
-                            messages = HNil,
-                            closure = HNil)
-
-      val firstConfig = Config[First]("first.test")
+      val firstConfig = $[First]()
       assert(firstConfig.s == "TEST")
       assert(firstConfig.n == 42)
       assert(firstConfig.d == 1.42)
+    }
+
+    "create instance with defaults" in {
+      val firstConfig = $[Second]()
+      assert(firstConfig.s == "DATA")
+    }
+
+    "create instance from path" in {
+      val firstConfig = $[Third]("third.test")
+      assert(firstConfig.s == "TEST")
     }
   }
 }

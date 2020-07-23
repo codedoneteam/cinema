@@ -39,11 +39,15 @@ class ConfigInstance[A <: Product] {
                                                                                         toMap: ToMap.Aux[Defaults, K, V],
                                                                                         gen: LabelledGeneric.Aux[A, ARecord],
                                                                                         fromMap: FromMap[ARecord]): A = {
-    val map = config.getConfig(path)
+    val map: Map[String, Any] = if (config.hasPath(path)) {
+      config.getConfig(path)
         .entrySet()
         .asScala
         .map { x => x.getKey -> x.getValue.unwrapped() }
         .toMap
+    } else {
+      Map.empty
+    }
 
     instance(map) match {
       case Some(v) => v

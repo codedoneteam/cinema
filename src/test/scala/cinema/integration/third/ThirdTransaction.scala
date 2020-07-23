@@ -1,6 +1,6 @@
 package cinema.integration.third
 
-import cinema.config.Config
+import cinema.config.$
 import cinema.integration.config.Data
 import cinema.integration.messages.SecondThird.{SecondThirdMessage, Third}
 import cinema.log.Log
@@ -22,7 +22,7 @@ object ThirdTransaction extends StatefulTransaction[SecondThirdMessage, ThirdSta
               }
             case _ =>
               timers.startSingleTimer(Third(i), FiniteDuration(1, SECONDS))
-              val inc = Config[Data]().inc
+              val inc = $[Data]().inc
               apply(Some(state.copy(state.counter + inc)))
           }
         case Third(0) =>
