@@ -17,8 +17,9 @@ object ThirdTransaction extends StatefulTransaction[SecondThirdMessage, ThirdSta
           val state = stateOpt.getOrElse(ThirdState())
           state.counter match {
             case v: Int if v == max =>
-              log.info(v)
-              commit(true)
+              log.info(v) {
+                commit(true)
+              }
             case _ =>
               timers.startSingleTimer(Third(i), FiniteDuration(1, SECONDS))
               val inc = Config[Data]().inc
