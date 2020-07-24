@@ -21,7 +21,7 @@ class SchedulerAwareTest extends FlatSpec with CinemaAware {
   "Every 1 seconds" should "run action" in {
     val promise = Promise[Int]()
     every(1 second){
-      promise.complete(Try(43))
+      if (!promise.isCompleted) promise.complete(Try(43))
     }
     assert(Await.result(promise.future, 5 seconds) == 43)
   }
