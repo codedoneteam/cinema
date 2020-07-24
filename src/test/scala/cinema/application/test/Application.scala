@@ -10,12 +10,15 @@ import scala.language.postfixOps
 
 object Application extends CinemaApp {
 
+  config { cfg: AppConfig =>
+
     val future = SagaBuilder()
       .transaction(OneTransaction)
       .build()
       .duration(10 seconds)
-      .run(Process)
+      .run(Process(cfg.number))
 
-     val result = Await.result(future, 10 seconds)
-     assert(result == "TEST")
+    val result = Await.result(future, 10 seconds)
+    assert(result == "TEST")
+  }
 }

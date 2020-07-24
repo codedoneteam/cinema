@@ -1,5 +1,6 @@
 package cinema.transaction
 
+import cinema.config.ConfigAware
 import cinema.saga.context.SagaContext
 import cinema.transaction.behavior.TransactionBehavior
 import cinema.transaction.closure.ClosureAware
@@ -10,6 +11,7 @@ trait AbstractTransaction[In, Out] extends TransactionBehavior[In, Out]
   with TransactionTypes[In, Out]
   with ClosureAware[In]
   with ImplicitTransaction[In]
+  with ConfigAware
   with SelectionAware {
 
   def apply(implicit sc: SagaContext[In]): Apply

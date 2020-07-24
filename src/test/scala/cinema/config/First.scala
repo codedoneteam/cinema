@@ -1,5 +1,5 @@
 package cinema.config
 
-case class First(n: Int = 0,
-                 s: String = "OK",
+case class First(number: Int = 0,
+                 strOne: String = "OK",
                  d: Double = 1.1)

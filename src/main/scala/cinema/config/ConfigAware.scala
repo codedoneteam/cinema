@@ -1,10 +1,18 @@
 package cinema.config
 
-import com.typesafe.config.{Config => TypeConfig}
+import cinema.config.Config.$
+import shapeless.ops.maps.FromMap
+import shapeless.ops.record.ToMap
+import shapeless.{Default, HList, LabelledGeneric}
 
-trait ConfigAware extends LoadableConfig {
-  implicit val config: TypeConfig = load(property = Option(System.getProperty("config")),
-                                         local = Option(System.getProperty("configPath")),
-                                         fileName = Option(System.getProperty("configFile"))
-  )
+import scala.reflect.runtime.universe.TypeTag
+
+trait ConfigAware {
+  def config[A <: Product, B, Defaults <: HList, K <: Symbol, V, ARecord <: HList](f: A => B)
+                                                                                  (implicit default: Default.AsRecord.Aux[A, Defaults],
+                                                                                   toMap: ToMap.Aux[Defaults, K, V],
+                                                                                   gen: LabelledGeneric.Aux[A, ARecord],
+                                                                                   fromMap: FromMap[ARecord],
+                                                                                   configBox: ConfigBox,
+                                                                                   typeTag: TypeTag[A]): B = f($[A]())
 }

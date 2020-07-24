@@ -13,7 +13,7 @@ object StatefulTimeoutTransaction extends StatefulTransaction[TestMessage, SomeS
   override def apply(state: Option[SomeState])(implicit sc: SagaContext[TestMessage]): Apply = execute { timers: Timers => _ =>log: Log =>msg =>
       state match {
         case Some(s) =>
-          log.info(s.i) {
+          log.infoBlock(s.i) {
             timers.startSingleTimer(msg, FiniteDuration(1, SECONDS))
             apply(Some(s.copy(s.i + 1)))
           }

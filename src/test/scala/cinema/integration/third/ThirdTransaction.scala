@@ -1,7 +1,6 @@
 package cinema.integration.third
 
-import cinema.config.Config.$
-import cinema.integration.config.Data
+import cinema.integration.config.ThirdConfig
 import cinema.integration.messages.SecondThird.{SecondThirdMessage, Third}
 import cinema.log.Log
 import cinema.saga.context.SagaContext
@@ -17,13 +16,15 @@ object ThirdTransaction extends StatefulTransaction[SecondThirdMessage, ThirdSta
           val state = stateOpt.getOrElse(ThirdState())
           state.counter match {
             case v: Int if v == max =>
-              log.info(v) {
+              log.infoBlock(v) {
                 commit(true)
               }
             case _ =>
               timers.startSingleTimer(Third(i), FiniteDuration(1, SECONDS))
-              val inc = $[Data]().inc
-              apply(Some(state.copy(state.counter + inc)))
+              config { cfg: ThirdConfig =>
+                log.info(s"Counter ${state.counter}")
+                apply(Some(state.copy(state.counter + cfg.step)))
+              }
           }
         case Third(0) =>
           Thread sleep 5000

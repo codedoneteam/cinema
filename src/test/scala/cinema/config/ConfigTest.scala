@@ -35,8 +35,8 @@ class ConfigTest extends WordSpecLike {
   "Config" must {
     "create instance" in {
       val firstConfig = $[First]()
-      assert(firstConfig.s == "TEST")
-      assert(firstConfig.n == 42)
+      assert(firstConfig.strOne == "TEST")
+      assert(firstConfig.number == 42)
       assert(firstConfig.d == 1.42)
     }
 
