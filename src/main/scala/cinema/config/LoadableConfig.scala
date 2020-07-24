@@ -1,7 +1,8 @@
 package cinema.config
 
 import java.io.File
-import com.typesafe.config.{Config => TypeConfig, ConfigFactory}
+
+import com.typesafe.config.{ConfigFactory, Config => TypeConfig}
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.internal.storage.file.FileRepository
 

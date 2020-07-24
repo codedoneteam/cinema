@@ -1,6 +1,6 @@
 package cinema.app
 
-import cinema.after.AfterAware
 import cinema.config.ConfigAware
+import cinema.scheduler.SchedulerAware
 
-trait CinemaAware extends ConfigAware with SystemAware with CinemaManagerAware with ActorAware with AfterAware
+trait CinemaAware extends ConfigAware with SystemAware with CinemaManagerAware with ActorAware with SchedulerAware
