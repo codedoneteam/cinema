@@ -11,7 +11,7 @@ import shapeless.{Default, HList, LabelledGeneric}
 import scala.collection.JavaConverters._
 import scala.reflect.runtime.universe.TypeTag
 
-class ConfigInstance[A <: Product] {
+class ConfigInstance[A <: Product] extends NormalizeAware {
 
   def apply[Defaults <: HList, K <: Symbol, V, ARecord <: HList]()
                                                                 (implicit default: Default.AsRecord.Aux[A, Defaults],
@@ -20,7 +20,7 @@ class ConfigInstance[A <: Product] {
                                                                  fromMap: FromMap[ARecord],
                                                                  configBox: ConfigBox,
                                                                  typeTag: TypeTag[A]): A = {
-    val path = typeTag.tpe.baseClasses.head.asClass.name.toString.toLowerCase
+    val path = normalizePath(typeTag.tpe.baseClasses.head.asClass.name.toString)
     parse(configBox.config, path)
   }
 
@@ -42,7 +42,7 @@ class ConfigInstance[A <: Product] {
       config.getConfig(path)
         .entrySet()
         .asScala
-        .map { x => normalize(x.getKey) -> x.getValue.unwrapped() }
+        .map { x => normalizeKey(x.getKey) -> x.getValue.unwrapped() }
         .toMap
     } else { Map.empty }
 
@@ -61,18 +61,4 @@ class ConfigInstance[A <: Product] {
     val mWithSymbolKeys: Map[Symbol, Any] = m.map { case (k, v) => Symbol(k) -> v }
     (defaults ++ mWithSymbolKeys).toRecord[ARecord].map(LabelledGeneric[A].from)
   }
-
-  private def normalize(key: String): String =  if (key.length > 2) {
-    val keyList = key.split("")
-    val normalizedKey = (2 to key.length).map(i => keyList.take(i - 1).last -> keyList.take(i).last)
-      .map { case ("-", s) => s.toUpperCase
-             case (_, "-") => ""
-             case (_, s) => s
-      }
-      .reduce(_ + _)
-    keyList.head + normalizedKey
-   } else {
-    key
-  }
-
 }
