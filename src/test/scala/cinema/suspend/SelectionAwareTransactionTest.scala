@@ -2,9 +2,9 @@ package cinema.suspend
 
 import cinema.app.CinemaAware
 import cinema.saga.builder.SagaBuilder
+import cinema.suspend.actor.Calc
 import cinema.suspend.transaction.InMessage.One
 import cinema.suspend.transaction.OutMessage.Two
-import cinema.suspend.actor.Calc
 import cinema.suspend.transaction.SelectionAwareTransaction
 import org.scalatest._
 

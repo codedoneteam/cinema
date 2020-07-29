@@ -1,6 +1,5 @@
 package cinema.scheduler
 
-import akka.actor.typed.DispatcherSelector
 import akka.actor.typed.DispatcherSelector._
 import cinema.app.ActorAware
 import cinema.scheduler.Scheduler.{Delayed, Every}

@@ -1,6 +1,5 @@
 package cinema.manager
 
-import akka.actor.typed.DispatcherSelector._
 import akka.actor.typed._
 import akka.actor.typed.scaladsl.Behaviors._
 import cinema.SagaOrchestrator

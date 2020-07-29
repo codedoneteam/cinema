@@ -2,8 +2,8 @@ package cinema.saga
 
 import cinema.app.CinemaAware
 import cinema.exception.UnexpectedTestException
-import cinema.saga.transaction.FailureMessages.InMessage
 import cinema.saga.builder.SagaBuilder
+import cinema.saga.transaction.FailureMessages.InMessage
 import cinema.saga.transaction.SomeFailureTransaction
 import cinema.transaction.exception.SagaException
 import org.scalatest.FlatSpec

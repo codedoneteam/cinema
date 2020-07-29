@@ -1,9 +1,9 @@
 package cinema.hvector
 
 import cinema.hvector.HVector.{HNil, HVector, select}
-import cinema.hvector.elements.Container
-import cinema.hvector.elements.DoubleElement
+import cinema.hvector.elements.{Container, DoubleElement}
 import org.scalatest.FlatSpec
+
 import scala.language.postfixOps
 import scala.reflect.runtime.universe._
 

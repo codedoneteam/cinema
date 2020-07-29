@@ -6,9 +6,7 @@ import akka.actor.typed.ActorRef
 import cinema.RetryStrategy
 import cinema.exception.{ExpectedTestException, OtherExpectedTestException}
 import cinema.message.Message
-import cinema.retry.suspend.actor.Calc
-import cinema.retry.suspend.actor.Calc.Calc
-import cinema.retry.suspend.actor.Calc.Inc
+import cinema.retry.suspend.actor.Calc.{Calc, Inc}
 import cinema.retry.suspend.transaction.OutMessage.{OutMessage, SomeOutMessage}
 import cinema.retry.suspend.transaction.RetryMessage.{CalcMessage, InMessage, RetryMessage, SecondInMessage}
 import cinema.saga.context.SagaContext

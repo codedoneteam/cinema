@@ -4,7 +4,7 @@ import java.util.UUID
 
 import akka.actor.typed.DispatcherSelector._
 import akka.actor.typed.scaladsl.Behaviors._
-import akka.actor.typed.{ActorRef, Behavior, DispatcherSelector}
+import akka.actor.typed.{ActorRef, DispatcherSelector}
 import cinema.TaskExecutor
 import cinema.manager.CinemaManager.{CinemaManagerTask, Selection}
 import cinema.message.Payload

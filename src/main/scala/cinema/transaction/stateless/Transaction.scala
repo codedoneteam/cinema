@@ -20,7 +20,7 @@ import scala.util.{Failure, Success, Try}
 trait Transaction[In, Out] extends AbstractTransaction[In, Out] {
 
   def execute[A <: In](f: Log => A => Commit[A])(implicit sc: SagaContext[A], typeTag: TypeTag[A]): Behavior[Message[A]] = {
-    val f2: TimerScheduler[Message[A]]  => ActorRef[Message[A]] => Log => A => Commit[A] = _ => _ => f
+    val f2: TimerScheduler[Message[A]] => ActorRef[Message[A]] => Log => A => Commit[A] = _ => _ => f
     tx(f2){ e => timers => {
       timers.cancelAll()
       revert(e)
@@ -55,7 +55,7 @@ trait Transaction[In, Out] extends AbstractTransaction[In, Out] {
 
   def compensate[A <: Out](f: Log => A => Commit[A])(implicit sc: SagaContext[A], typeTag: TypeTag[A]): Behavior[Message[A]] = {
     val f2: TimerScheduler[Message[A]] => ActorRef[Message[A]] => Log => A => Commit[A] = _ => _ => f
-    tx(f2){ e => timers => {
+    tx(f2){ _ => timers => {
         timers.cancelAll()
         throwConsistencyException
       }

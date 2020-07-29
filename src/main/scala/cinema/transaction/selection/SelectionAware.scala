@@ -1,6 +1,6 @@
 package cinema.transaction.selection
 
-import akka.actor.typed.{ActorRef, Behavior}
+import akka.actor.typed.ActorRef
 import cinema.saga.context.SagaContext
 import cinema.saga.executor.ExecutorMessage.ActorSelectionExecution
 import cinema.transaction.behavior.ExecutionBehavior

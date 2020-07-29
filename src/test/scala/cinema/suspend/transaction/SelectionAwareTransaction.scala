@@ -4,7 +4,6 @@ import akka.actor.typed.ActorRef
 import cinema.log.Log
 import cinema.message.Message
 import cinema.saga.context.SagaContext
-import cinema.suspend.actor.Calc
 import cinema.suspend.actor.Calc.{Calc, Inc}
 import cinema.suspend.transaction.InMessage.{CalcResult, InMessage, One}
 import cinema.suspend.transaction.OutMessage.Two

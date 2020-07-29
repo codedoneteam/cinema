@@ -2,8 +2,8 @@ package cinema.stateful.transaction
 
 import cinema.log.Log
 import cinema.saga.context.SagaContext
-import TestMessage.{First, Second, TestTransactionMessage}
-import TestOutMessage.{TestOut, TestOutMessage}
+import cinema.stateful.transaction.TestMessage.{First, Second, TestTransactionMessage}
+import cinema.stateful.transaction.TestOutMessage.{TestOut, TestOutMessage}
 import cinema.transaction.stateful.StatefulTransaction
 
 import scala.concurrent.duration.{FiniteDuration, SECONDS}
