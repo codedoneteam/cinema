@@ -3,8 +3,9 @@ package cinema.retry
 import akka.actor.typed.DispatcherSelector.blocking
 import cinema.app.CinemaAware
 import cinema.exception.OtherExpectedTestException
-import cinema.retry.OutMessage.SomeOutMessage
-import cinema.retry.RetryMessage.{InMessage, SecondInMessage}
+import cinema.retry.transaction.OutMessage.SomeOutMessage
+import cinema.retry.transaction.RetryMessage.{InMessage, SecondInMessage}
+import cinema.retry.transaction.SomeRetryTransaction
 import cinema.saga.builder.SagaBuilder
 import org.scalatest._
 

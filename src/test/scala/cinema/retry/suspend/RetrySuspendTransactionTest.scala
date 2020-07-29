@@ -3,8 +3,9 @@ package cinema.retry.suspend
 import akka.actor.typed.DispatcherSelector.blocking
 import cinema.app.CinemaAware
 import cinema.exception.OtherExpectedTestException
-import cinema.retry.suspend.OutMessage.SomeOutMessage
-import cinema.retry.suspend.RetryMessage.{InMessage, SecondInMessage}
+import cinema.retry.suspend.transaction.OutMessage.SomeOutMessage
+import cinema.retry.suspend.transaction.RetryMessage.{InMessage, SecondInMessage}
+import cinema.retry.suspend.transaction.RetrySuspendTransaction
 import cinema.saga.builder.SagaBuilder
 import org.scalatest._
 

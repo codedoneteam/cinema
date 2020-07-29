@@ -1,14 +1,11 @@
 package cinema.hvector
 
 import cinema.hvector.HVector.{HNil, HVector, select}
+import cinema.hvector.elements.Container
+import cinema.hvector.elements.DoubleElement
 import org.scalatest.FlatSpec
-
 import scala.language.postfixOps
 import scala.reflect.runtime.universe._
-
-
-case class Container[A](a: A)
-case class Double[A, B](a: A, b: B)
 
 
 class HVectorTest extends FlatSpec {
@@ -49,9 +46,9 @@ class HVectorTest extends FlatSpec {
   }
 
   "Double types check" should "be found" in {
-    val list = Double(2, 1) :: false :: Double("OK", 1) :: HNil
-    val s = select[Double[String, Int]](list)
-    assert(s.contains(Double("OK", 1)))
+    val list = DoubleElement(2, 1) :: false :: DoubleElement("OK", 1) :: HNil
+    val s = select[DoubleElement[String, Int]](list)
+    assert(s.contains(DoubleElement("OK", 1)))
   }
 
   "HNil" should "equals HNil" in {

@@ -5,9 +5,10 @@ import java.util.UUID
 
 import akka.actor.typed.DispatcherSelector
 import cinema.config.Config.$
+import cinema.config.config.{First, Second, Third}
 import cinema.hvector.HVector.HNil
 import cinema.saga.context.SagaContext
-import cinema.stateful.TestMessage
+import cinema.stateful.transaction.TestMessage
 import com.typesafe.config.ConfigFactory
 import org.scalatest.WordSpecLike
 

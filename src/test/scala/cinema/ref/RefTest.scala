@@ -1,7 +1,8 @@
 package cinema.ref
 
 import cinema.app.CinemaAware
-import cinema.ref.ReplayActor.Ping
+import cinema.ref.actor.ReplayActor
+import cinema.ref.actor.ReplayActor.Ping
 import org.scalatest.FlatSpec
 
 import scala.concurrent.duration._

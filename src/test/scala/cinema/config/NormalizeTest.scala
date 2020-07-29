@@ -7,7 +7,7 @@ import akka.actor.typed.DispatcherSelector
 import cinema.config.Config.$
 import cinema.hvector.HVector.HNil
 import cinema.saga.context.SagaContext
-import cinema.stateful.TestMessage
+import cinema.stateful.transaction.TestMessage
 import com.typesafe.config.ConfigFactory
 import org.scalatest.WordSpecLike
 
