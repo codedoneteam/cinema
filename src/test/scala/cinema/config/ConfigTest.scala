@@ -5,9 +5,10 @@ import java.util.UUID
 
 import akka.actor.typed.DispatcherSelector
 import cinema.config.Config.$
+import cinema.config.config.{First, Second, Third}
 import cinema.hvector.HVector.HNil
 import cinema.saga.context.SagaContext
-import cinema.stateful.TestMessage
+import cinema.stateful.transaction.TestMessage
 import com.typesafe.config.ConfigFactory
 import org.scalatest.WordSpecLike
 
@@ -35,8 +36,8 @@ class ConfigTest extends WordSpecLike {
   "Config" must {
     "create instance" in {
       val firstConfig = $[First]()
-      assert(firstConfig.s == "TEST")
-      assert(firstConfig.n == 42)
+      assert(firstConfig.strOne == "TEST")
+      assert(firstConfig.number == 42)
       assert(firstConfig.d == 1.42)
     }
 

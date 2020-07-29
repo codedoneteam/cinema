@@ -2,7 +2,8 @@ package cinema.closure
 
 import akka.actor.typed.DispatcherSelector.blocking
 import cinema.app.CinemaAware
-import cinema.closure.ClosureMessages.{InMessage, OutMessage}
+import cinema.closure.transaction.ClosureMessages.{InMessage, OutMessage}
+import cinema.closure.transaction.SomeClosureTransaction
 import cinema.saga.builder.SagaBuilder
 import org.scalatest._
 

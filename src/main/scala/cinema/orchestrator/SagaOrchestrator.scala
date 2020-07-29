@@ -2,8 +2,9 @@ package cinema.orchestrator
 
 import java.util.UUID
 
+import akka.actor.typed.DispatcherSelector._
 import akka.actor.typed.scaladsl.Behaviors._
-import akka.actor.typed.{ActorRef, Behavior, DispatcherSelector}
+import akka.actor.typed.{ActorRef, DispatcherSelector}
 import cinema.TaskExecutor
 import cinema.manager.CinemaManager.{CinemaManagerTask, Selection}
 import cinema.message.Payload
@@ -30,14 +31,14 @@ object SagaOrchestrator {
 
   case class Inconsistent[A](id: UUID) extends OrchestratorTask[A]
 
-  case class ActorSelection[A](typeTag: TypeTag[A], behavior: () => Behavior[A], callback: Promise[ActorRef[A]]) extends OrchestratorTask[A]
+  case class ActorSelection[A](typeTag: TypeTag[A], callback: Promise[ActorRef[A]]) extends OrchestratorTask[A]
 
 
   def apply(cinemaManager: ActorRef[CinemaManagerTask[_]], executor: Option[TaskExecutor] = None, executorPollSize: Int): Receive[OrchestratorTask[_]] = {
     receive[OrchestratorTask[_]]((ctx, message) => {
       message match {
         case Start(tx, sagaContext, dispatcherSelector, msg) =>
-          val ref = executor.getOrElse(ctx.spawn(CinemaExecutorPool(ctx.self, executorPollSize), "cinema-executor", DispatcherSelector.fromConfig("cinema.saga-executor-dispatcher")))
+          val ref = executor.getOrElse(ctx.spawn(CinemaExecutorPool(ctx.self, executorPollSize), "cinema-executor", fromConfig("cinema.saga-executor-dispatcher")))
           ref ! StartSagaExecution(tx, sagaContext.copy(executor = ref), dispatcherSelector, msg)
           apply(cinemaManager, Some(ref), executorPollSize)
         case Completed(id) =>
@@ -49,8 +50,8 @@ object SagaOrchestrator {
         case Inconsistent(id) =>
           ctx.log.debug(s"Saga $id completed")
           same
-        case ActorSelection(typeTag, behavior, promise) =>
-          cinemaManager ! Selection(typeTag, behavior, promise)
+        case ActorSelection(typeTag, promise) =>
+          cinemaManager ! Selection(typeTag, promise)
           same
       }
     })

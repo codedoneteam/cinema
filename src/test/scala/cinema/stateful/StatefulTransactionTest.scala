@@ -9,8 +9,9 @@ import cinema.exception.UnexpectedTestException
 import cinema.hvector.HVector.HNil
 import cinema.message.Payload
 import cinema.saga.context.SagaContext
-import cinema.stateful.TestMessage.First
-import cinema.stateful.TestOutMessage.{TestOut, TestOutMessage}
+import cinema.stateful.transaction.TestMessage.First
+import cinema.stateful.transaction.TestOutMessage.{TestOut, TestOutMessage}
+import cinema.stateful.transaction.{SomeState, SomeStatefulTransaction}
 import org.scalatest._
 
 import scala.concurrent.ExecutionContext.Implicits.global

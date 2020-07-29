@@ -3,7 +3,8 @@ package cinema.stateless
 import akka.actor.typed.DispatcherSelector.blocking
 import cinema.app.CinemaAware
 import cinema.saga.builder.SagaBuilder
-import cinema.stateless.StatelessMessages.{InMessage, OutMessage}
+import cinema.stateless.transaction.SomeStatelessTransaction
+import cinema.stateless.transaction.StatelessMessages.{InMessage, OutMessage}
 import org.scalatest._
 
 import scala.concurrent.Await

@@ -1,9 +1,9 @@
 package cinema.app
 
 import akka.{actor => classic}
-import cinema.config.ConfigAware
+import cinema.config.ConfigInclude
 
 trait SystemAware {
-  this: ConfigAware =>
-    implicit val system: classic.ActorSystem = classic.ActorSystem(name = "cinema", config = config)
+  this: ConfigInclude =>
+    implicit val system: classic.ActorSystem = classic.ActorSystem(name = "cinema", config = implicitConfigBox.config)
 }

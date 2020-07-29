@@ -19,11 +19,13 @@ trait TransactionBehavior[In, Out] extends ExecutionBehavior with ApplyBehavior[
 
     protected def tx[A](f: TimerScheduler[Message[A]] => ActorRef[Message[A]] => Log => A => Commit[A])
                        (exceptionHandler: Throwable => TimerScheduler[Message[A]] => Behavior[Message[A]])
-                       (implicit sc: SagaContext[A], typeTag: TypeTag[A]): Behavior[Message[A]] = {
+                       (implicit sc: SagaContext[A],
+                        typeTag: TypeTag[A]): Behavior[Message[A]] = {
       withTimers[Message[A]] { timers =>
         withMdc[Message[A]](Map("saga" -> sc.id.toString)) {
           receive[Message[A]]((ctx, message) =>
             Try {
+              if (sc.executionExpired.isBefore(LocalDateTime.now())) throw new TransactionTimeoutException
               message match {
                 case Payload(data) =>
                   timers.startSingleTimer(Timeout, timeout(sc))

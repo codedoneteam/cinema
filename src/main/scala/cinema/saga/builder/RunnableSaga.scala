@@ -1,8 +1,8 @@
 package cinema.saga.builder
 
 import cinema.CinemaManager
+import cinema.config.ConfigBox
 import cinema.saga.Saga
-import com.typesafe.config.Config
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Future, Promise}
@@ -13,13 +13,13 @@ class RunnableSaga[In, Out](saga: Saga[In, Out],
                             duration: Duration,
                             compensateDuration: Duration) {
 
-  def run(message: In)(implicit config: Config, typeTag: TypeTag[In]): Future[Out] = {
+  def run(message: In)(implicit configInclude: ConfigBox, typeTag: TypeTag[In]): Future[Out] = {
     val promise = Promise[Out]()
     saga.run(cinemaManager = cinemaManager,
              duration = duration,
              compensateDuration = compensateDuration,
              message = message,
-             config = config,
+             config = configInclude.config,
              promise = promise,
              closure = saga.closure)
     promise.future

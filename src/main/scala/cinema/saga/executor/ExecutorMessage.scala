@@ -28,5 +28,5 @@ object ExecutorMessage {
 
   case class SagaConsistencyException[A](id: UUID) extends ExecutorMessage[A]
 
-  case class ActorSelectionExecution[A](tt: TypeTag[A], behavior: () => Behavior[A], callback: Promise[ActorRef[A]]) extends ExecutorMessage[A]
+  case class ActorSelectionExecution[A](tt: TypeTag[A], callback: Promise[ActorRef[A]]) extends ExecutorMessage[A]
 }

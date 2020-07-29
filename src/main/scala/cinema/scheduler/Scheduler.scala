@@ -20,6 +20,7 @@ object Scheduler {
           same
         case Every(duration, action) =>
           timers.startTimerAtFixedRate(Run(action), FiniteDuration(duration.toMillis, MILLISECONDS))
+          ctx.self ! Run(action)
           same
         case Run(action) =>
           try {

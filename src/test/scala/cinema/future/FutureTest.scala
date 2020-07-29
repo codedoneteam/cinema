@@ -1,6 +1,7 @@
 package cinema.future
 
 import cinema.app.CinemaAware
+import cinema.future.transaction.FutureTransaction
 import cinema.saga.builder.SagaBuilder
 import org.scalatest.FlatSpec
 
