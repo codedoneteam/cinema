@@ -1,5 +1,6 @@
 package cinema.manager
 
+import akka.actor.typed.DispatcherSelector._
 import akka.actor.typed._
 import akka.actor.typed.scaladsl.Behaviors._
 import cinema.SagaOrchestrator
@@ -20,7 +21,8 @@ object CinemaManager {
   case class ProduceRef[A](behavior: Behavior[A],
                            name: String,
                            promise: Promise[ActorRef[A]],
-                           typeTag: TypeTag[A]) extends CinemaManagerTask[A]
+                           typeTag: TypeTag[A],
+                           ds: DispatcherSelector) extends CinemaManagerTask[A]
 
 
   case class StartSaga[A](tx: AbstractTransaction[A, _],
@@ -36,8 +38,8 @@ object CinemaManager {
             actorRefs: Map[TypeTag[_], ActorRef[_]] = Map.empty,
             executorPollSize: Int): Behavior[CinemaManagerTask[_]] = receive[CinemaManagerTask[_]]((ctx, message) => {
     message match {
-      case ProduceRef(behavior, name, promise, typeTag) =>
-        val actorRef = ctx.spawn(behavior = behavior, name = name)
+      case ProduceRef(behavior, name, promise, typeTag, ds) =>
+        val actorRef = ctx.spawn(behavior = behavior, name = name, props = ds)
         promise.complete(Try(actorRef))
         apply(sagaOrchestrator = sagaOrchestrator,
           actorRefs = actorRefs + (typeTag -> actorRef),

@@ -2,6 +2,7 @@ package cinema.orchestrator
 
 import java.util.UUID
 
+import akka.actor.typed.DispatcherSelector._
 import akka.actor.typed.scaladsl.Behaviors._
 import akka.actor.typed.{ActorRef, Behavior, DispatcherSelector}
 import cinema.TaskExecutor
@@ -37,7 +38,7 @@ object SagaOrchestrator {
     receive[OrchestratorTask[_]]((ctx, message) => {
       message match {
         case Start(tx, sagaContext, dispatcherSelector, msg) =>
-          val ref = executor.getOrElse(ctx.spawn(CinemaExecutorPool(ctx.self, executorPollSize), "cinema-executor", DispatcherSelector.fromConfig("cinema.saga-executor-dispatcher")))
+          val ref = executor.getOrElse(ctx.spawn(CinemaExecutorPool(ctx.self, executorPollSize), "cinema-executor", fromConfig("cinema.saga-executor-dispatcher")))
           ref ! StartSagaExecution(tx, sagaContext.copy(executor = ref), dispatcherSelector, msg)
           apply(cinemaManager, Some(ref), executorPollSize)
         case Completed(id) =>
