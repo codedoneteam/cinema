@@ -31,7 +31,7 @@ object SagaOrchestrator {
 
   case class Inconsistent[A](id: UUID) extends OrchestratorTask[A]
 
-  case class ActorSelection[A](typeTag: TypeTag[A], behavior: () => Behavior[A], callback: Promise[ActorRef[A]]) extends OrchestratorTask[A]
+  case class ActorSelection[A](typeTag: TypeTag[A], callback: Promise[ActorRef[A]]) extends OrchestratorTask[A]
 
 
   def apply(cinemaManager: ActorRef[CinemaManagerTask[_]], executor: Option[TaskExecutor] = None, executorPollSize: Int): Receive[OrchestratorTask[_]] = {
@@ -50,8 +50,8 @@ object SagaOrchestrator {
         case Inconsistent(id) =>
           ctx.log.debug(s"Saga $id completed")
           same
-        case ActorSelection(typeTag, behavior, promise) =>
-          cinemaManager ! Selection(typeTag, behavior, promise)
+        case ActorSelection(typeTag, promise) =>
+          cinemaManager ! Selection(typeTag, promise)
           same
       }
     })

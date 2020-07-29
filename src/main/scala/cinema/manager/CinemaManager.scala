@@ -9,6 +9,7 @@ import cinema.orchestrator.SagaOrchestrator
 import cinema.orchestrator.SagaOrchestrator.Start
 import cinema.saga.context.SagaContext
 import cinema.transaction.AbstractTransaction
+import cinema.transaction.exception.NoSuchActorRefException
 
 import scala.concurrent.Promise
 import scala.reflect.runtime.universe.TypeTag
@@ -30,7 +31,7 @@ object CinemaManager {
                           dispatcherSelector: DispatcherSelector,
                           message: Payload[A]) extends CinemaManagerTask[A]
 
-  case class Selection[A](tt: TypeTag[A], behavior: () => Behavior[A], callback: Promise[ActorRef[A]]) extends CinemaManagerTask[A]
+  case class Selection[A](tt: TypeTag[A], callback: Promise[ActorRef[A]]) extends CinemaManagerTask[A]
 
 
 
@@ -52,17 +53,12 @@ object CinemaManager {
           actorRefs = actorRefs,
           executorPollSize = executorPollSize)
 
-      case Selection(typeTag, behavior, promise) =>
+      case Selection(typeTag, promise) =>
         actorRefs.get(typeTag) match {
           case Some(actorRef) =>
             promise.complete(Try(actorRef.asInstanceOf[ActorRef[Any]]))
             same
-          case _ =>
-            val actorRef = ctx.spawn(behavior = behavior(), name = typeTag.tpe.toString)
-            promise.complete(Try(actorRef.asInstanceOf[ActorRef[Any]]))
-            apply(sagaOrchestrator = sagaOrchestrator,
-              actorRefs = actorRefs + (typeTag -> actorRef),
-              executorPollSize = executorPollSize)
+          case _ => throw new NoSuchActorRefException(typeTag)
         }
     }
   })

@@ -37,8 +37,8 @@ object CinemaExecutor {
       case SagaConsistencyException(id) =>
         orchestrator ! Inconsistent(id)
         same
-      case ActorSelectionExecution(typeTag, behavior, promise) =>
-        orchestrator ! ActorSelection(typeTag, behavior, promise)
+      case ActorSelectionExecution(typeTag, promise) =>
+        orchestrator ! ActorSelection(typeTag, promise)
         same
     }
   })

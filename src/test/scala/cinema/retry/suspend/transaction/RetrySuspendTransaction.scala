@@ -7,6 +7,7 @@ import cinema.RetryStrategy
 import cinema.exception.{ExpectedTestException, OtherExpectedTestException}
 import cinema.message.Message
 import cinema.retry.suspend.actor.Calc
+import cinema.retry.suspend.actor.Calc.Calc
 import cinema.retry.suspend.actor.Calc.Inc
 import cinema.retry.suspend.transaction.OutMessage.{OutMessage, SomeOutMessage}
 import cinema.retry.suspend.transaction.RetryMessage.{CalcMessage, InMessage, RetryMessage, SecondInMessage}
@@ -28,7 +29,7 @@ object RetrySuspendTransaction extends SuspendTransaction[RetryMessage, OutMessa
         commit(SomeOutMessage(i))
       case InMessage() =>
         if (LocalDateTime.now().isAfter(sc.executionExpired.minusSeconds(25))) {
-          actorSelection(Calc()) { actorRef =>
+          actorSelection[Calc]{ actorRef =>
             actorRef ! Inc(42, self.asInstanceOf[ActorRef[Message[Any]]])
           }
           await
