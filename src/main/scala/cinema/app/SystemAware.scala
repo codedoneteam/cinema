@@ -5,5 +5,5 @@ import cinema.config.ConfigInclude
 
 trait SystemAware {
   this: ConfigInclude =>
-    implicit val system: classic.ActorSystem = classic.ActorSystem(name = "cinema", config = implicitConfigBox.config)
+    implicit val implicitAkkaSystem: classic.ActorSystem = classic.ActorSystem(name = "cinema", config = implicitConfigBox.config)
 }

@@ -13,13 +13,12 @@ import scala.reflect.runtime.universe.TypeTag
 
 class ConfigInstance[A <: Product] extends NormalizeAware {
 
-  def apply[Defaults <: HList, K <: Symbol, V, ARecord <: HList]()
-                                                                (implicit default: Default.AsRecord.Aux[A, Defaults],
-                                                                 toMap: ToMap.Aux[Defaults, K, V],
-                                                                 gen: LabelledGeneric.Aux[A, ARecord],
-                                                                 fromMap: FromMap[ARecord],
-                                                                 configBox: ConfigBox,
-                                                                 typeTag: TypeTag[A]): A = {
+  def apply[D <: HList, K <: Symbol, V, ARecord <: HList]()(implicit default: Default.AsRecord.Aux[A, D],
+                                                            toMap: ToMap.Aux[D, K, V],
+                                                            gen: LabelledGeneric.Aux[A, ARecord],
+                                                            fromMap: FromMap[ARecord],
+                                                            configBox: ConfigBox,
+                                                            typeTag: TypeTag[A]): A = {
     val path = normalizePath(typeTag.tpe.baseClasses.head.asClass.name.toString)
     parse(configBox.config, path)
   }
@@ -34,8 +33,8 @@ class ConfigInstance[A <: Product] extends NormalizeAware {
     parse(configBox.config, path)
   }
 
-  private def parse[Defaults <: HList, K <: Symbol, V, ARecord <: HList](config: TypeConfig, path: String)(implicit default: Default.AsRecord.Aux[A, Defaults],
-                                                                                        toMap: ToMap.Aux[Defaults, K, V],
+  private def parse[D <: HList, K <: Symbol, V, ARecord <: HList](config: TypeConfig, path: String)(implicit default: Default.AsRecord.Aux[A, D],
+                                                                                        toMap: ToMap.Aux[D, K, V],
                                                                                         gen: LabelledGeneric.Aux[A, ARecord],
                                                                                         fromMap: FromMap[ARecord]): A = {
     val map: Map[String, Any] = if (config.hasPath(path)) {
@@ -52,9 +51,9 @@ class ConfigInstance[A <: Product] extends NormalizeAware {
     }
   }
 
-  private def instance[Defaults <: HList, K <: Symbol, V, ARecord <: HList](m: Map[String, Any])(implicit
-                                                                  default: Default.AsRecord.Aux[A, Defaults],
-                                                                  toMap: ToMap.Aux[Defaults, K, V],
+  private def instance[D <: HList, K <: Symbol, V, ARecord <: HList](m: Map[String, Any])(implicit
+                                                                  default: Default.AsRecord.Aux[A, D],
+                                                                  toMap: ToMap.Aux[D, K, V],
                                                                   gen: LabelledGeneric.Aux[A, ARecord],
                                                                   fromMap: FromMap[ARecord]): Option[A] = {
     val defaults: Map[Symbol, Any] = default().toMap[K, V].map { case (k, v) => k -> v }
