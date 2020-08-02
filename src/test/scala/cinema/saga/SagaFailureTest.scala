@@ -24,7 +24,7 @@ class SagaFailureTest extends FlatSpec with CinemaAware {
       .run(InMessage(42))
 
     future.onComplete {
-      case Success(v) => throw new UnexpectedTestException
+      case Success(_) => throw new UnexpectedTestException
       case Failure(e: SagaException[_]) => assert(e.message == InMessage(42))
       case Failure(_) => throw new UnexpectedTestException
     }
