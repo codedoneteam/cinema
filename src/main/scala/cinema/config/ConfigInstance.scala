@@ -17,7 +17,7 @@ class ConfigInstance[A <: Product] extends NormalizeAware {
                                                             toMap: ToMap.Aux[D, K, V],
                                                             gen: LabelledGeneric.Aux[A, ARecord],
                                                             fromMap: FromMap[ARecord],
-                                                            configBox: ConfigBox,
+                                                            configBox: BoxedConfig,
                                                             typeTag: TypeTag[A]): A = {
     val path = normalizePath(typeTag.tpe.baseClasses.head.asClass.name.toString)
     parse(configBox.config, path)
@@ -28,7 +28,7 @@ class ConfigInstance[A <: Product] extends NormalizeAware {
                                                                  toMap: ToMap.Aux[Defaults, K, V],
                                                                  gen: LabelledGeneric.Aux[A, ARecord],
                                                                  fromMap: FromMap[ARecord],
-                                                                 configBox: ConfigBox,
+                                                                 configBox: BoxedConfig,
                                                                  typeTag: TypeTag[A]): A = {
     parse(configBox.config, path)
   }

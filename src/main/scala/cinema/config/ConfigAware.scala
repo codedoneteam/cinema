@@ -13,6 +13,14 @@ trait ConfigAware {
                                                                                    toMap: ToMap.Aux[Defaults, K, V],
                                                                                    gen: LabelledGeneric.Aux[A, ARecord],
                                                                                    fromMap: FromMap[ARecord],
-                                                                                   configBox: ConfigBox,
+                                                                                   configBox: BoxedConfig,
                                                                                    typeTag: TypeTag[A]): B = f($[A]())
+
+  def config[A <: Product, B, Defaults <: HList, K <: Symbol, V, ARecord <: HList](path: String)(f: A => B)
+                                                                                  (implicit default: Default.AsRecord.Aux[A, Defaults],
+                                                                                   toMap: ToMap.Aux[Defaults, K, V],
+                                                                                   gen: LabelledGeneric.Aux[A, ARecord],
+                                                                                   fromMap: FromMap[ARecord],
+                                                                                   configBox: BoxedConfig,
+                                                                                   typeTag: TypeTag[A]): B = f($[A](path))
 }

@@ -5,7 +5,7 @@ import java.util.UUID
 
 import akka.actor.typed.{ActorSystem, DispatcherSelector}
 import cinema.TaskExecutor
-import cinema.config.ConfigBox
+import cinema.config.BoxedConfig
 import cinema.hvector.HVector._
 import cinema.saga.builder.SagaDuration._
 import com.typesafe.config.Config
@@ -28,7 +28,7 @@ case class SagaContext[A](in: A,
                           reverse: HVector,
                           promise: Promise[_],
                           messages: HVector,
-                          closure: HVector) extends ConfigBox {
+                          closure: HVector) extends BoxedConfig {
 
   def shift[B : TypeTag](b: B): SagaContext[B] = this.copy(in = b, messages = b :: messages)
 

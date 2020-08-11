@@ -21,7 +21,7 @@ object ThirdTransaction extends StatefulTransaction[SecondThirdMessage, ThirdSta
               }
             case _ =>
               timers.startSingleTimer(Third(i), FiniteDuration(1, SECONDS))
-              config { cfg: ThirdConfig =>
+              config("third-config") { cfg: ThirdConfig =>
                 log.info(s"Counter ${state.counter}")
                 apply(Some(state.copy(state.counter + cfg.step)))
               }

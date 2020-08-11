@@ -2,6 +2,6 @@ package cinema.config
 
 import com.typesafe.config.{Config => TypeConfig}
 
-trait ConfigBox {
+trait BoxedConfig {
   val config: TypeConfig
 }

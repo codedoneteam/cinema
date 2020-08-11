@@ -9,16 +9,16 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 object Application extends CinemaApp {
+  infoBlock("Run application") {
+    config { cfg: AppConfig =>
+      val future = SagaBuilder()
+        .transaction(OneTransaction)
+        .build()
+        .duration(10 seconds)
+        .run(Process(cfg.number))
 
-  config { cfg: AppConfig =>
-
-    val future = SagaBuilder()
-      .transaction(OneTransaction)
-      .build()
-      .duration(10 seconds)
-      .run(Process(cfg.number))
-
-    val result = Await.result(future, 10 seconds)
-    assert(result == "TEST")
+      val result = Await.result(future, 10 seconds)
+      assert(result == "TEST")
+    }
   }
 }

@@ -2,6 +2,7 @@ package cinema.saga.builder
 
 import cinema.CinemaManager
 import cinema.saga.Saga
+
 import scala.concurrent.duration.Duration
 
 class DurableSaga[In, Out](saga: Saga[In, Out], cinemaManager: CinemaManager) {
