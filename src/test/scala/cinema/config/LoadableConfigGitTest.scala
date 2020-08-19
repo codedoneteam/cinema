@@ -25,5 +25,7 @@ class LoadableConfigGitTest extends FlatSpec with LoadableConfig with BeforeAndA
       assert(load(Some(gitPath), local).getString("test.data") == "TEST3")
     }
 
-  override def afterAll(): Unit = new File(getLocalPath) delete()
+  override def afterAll(): Unit = {
+    new File(getLocalPath).delete()
+  }
 }

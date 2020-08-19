@@ -24,10 +24,11 @@ object CinemaExecutor {
           props = dispatcherSelector)
         ref ! msg
         } match {
-          case Failure(e) => ctx.log.error(e.getMessage)
-          case _ => Unit
+          case Failure(e) =>
+            ctx.log.error(e.getMessage)
+            same
+          case _ => same
         }
-        same
       case SuccessComplete(id) =>
         orchestrator ! Completed(id)
         same

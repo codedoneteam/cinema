@@ -9,8 +9,8 @@ ThisBuild / resolvers  ++= Seq(
   Resolver.jcenterRepo
 )
 
-lazy val scala = "2.12.7"
-lazy val akka = "2.6.4"
+lazy val scala = "2.13.3"
+lazy val akka = "2.6.8"
 
 lazy val root = (project in file("."))
   .settings(
