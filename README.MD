@@ -13,7 +13,8 @@ val saga = SagaBuilder()
 # Run saga
 
 ```
-val future = saga.duration(100 seconds).run(First(1))
+val future = saga.duration(100 seconds)
+                 .run(First(1))
 ```
 
 
@@ -29,12 +30,16 @@ val future = saga.duration(100 seconds).run(First(1))
 object FirstTransaction extends Transaction[One, Two] {
 
   override def apply(implicit sc: SagaContext[One]): Apply = execute { log: Log => {
-     case _ => // Transaction business logic
+     case _ =>
+        // Transaction business logic
+        commit(Two)
    }
   }
 
   override def unapply(implicit sc: SagaContext[Two]): UnApply = compensate { log: Log => {
-        case _ => // Compensate logic
+        case _ =>
+            // Compensate logic
+            commit(One)
     }
   }
 }
@@ -53,12 +58,16 @@ object SomeRetryTransaction extends Transaction[One, Two] {
   }
 
   override def apply(implicit sc: SagaContext[One]): Apply = execute(retryStrategy) { log: Log => {
-      case _ => // Transaction business logic
+      case _ =>
+         // Transaction business logic
+         commit(Two)
     }
   }
 
   override def unapply(implicit sc: SagaContext[Two]): UnApply = compensate(retryStrategy) { log: Log => {
-      case _ => // Compensate logic
+      case _ =>
+         // Compensate logic
+         commit(One)
      }
     }
    }
