@@ -162,8 +162,6 @@ object Application extends CinemaApp {
 ## Select actor from transaction
 
 
-## Select actor from transaction
-
 ```
 object SomeTransaction extends Transaction[One, Two] {
 
