@@ -6,6 +6,7 @@ import cinema.suspend.actor.Calc
 import cinema.suspend.transaction.InMessage.One
 import cinema.suspend.transaction.OutMessage.Two
 import cinema.suspend.transaction.SelectionAwareTransaction
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 import org.scalatest._
 
 import scala.concurrent.duration._
@@ -25,7 +26,7 @@ class SelectionAwareTransactionTest extends FlatSpec with CinemaAware {
       promise.completeWith(future)
     }
     val result = Await.result(promise.future, 100 seconds)
-    assert(result == Two(43))
+    result shouldBe Two(43)
   }
 
 }

@@ -7,6 +7,7 @@ import cinema.retry.transaction.OutMessage.SomeOutMessage
 import cinema.retry.transaction.RetryMessage.{InMessage, SecondInMessage}
 import cinema.retry.transaction.SomeRetryTransaction
 import cinema.saga.builder.SagaBuilder
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 import org.scalatest._
 
 import scala.concurrent.Await
@@ -23,7 +24,7 @@ class RetryTest extends FlatSpec with CinemaAware {
       .run(InMessage())
 
     val result = Await.result(future, 10 seconds)
-    assert(result == SomeOutMessage())
+    result shouldBe SomeOutMessage()
   }
 
   "Some retry" should "throw exception" in {

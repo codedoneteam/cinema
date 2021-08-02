@@ -5,6 +5,7 @@ import cinema.app.CinemaAware
 import cinema.closure.transaction.ClosureMessages.{InMessage, OutMessage}
 import cinema.closure.transaction.SomeClosureTransaction
 import cinema.saga.builder.SagaBuilder
+import org.scalatest.Matchers.{be, convertToAnyShouldWrapper}
 import org.scalatest._
 
 import scala.concurrent.Await
@@ -22,6 +23,6 @@ class ClosureTest extends FlatSpec with CinemaAware {
       .run(InMessage())
 
     val result = Await.result(future, 100 seconds)
-    assert(result == OutMessage(42))
+    result shouldBe OutMessage(42)
   }
 }

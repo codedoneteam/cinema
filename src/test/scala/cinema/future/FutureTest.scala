@@ -4,6 +4,7 @@ import cinema.app.CinemaAware
 import cinema.future.transaction.FutureTransaction
 import cinema.saga.builder.SagaBuilder
 import org.scalatest.FlatSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -19,7 +20,7 @@ class FutureTest extends FlatSpec with CinemaAware {
       .run(1)
 
     val result = Await.result(future, 100 seconds)
-    assert(result == "1")
+    result shouldBe "1"
   }
 
 }

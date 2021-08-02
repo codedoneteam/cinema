@@ -5,16 +5,16 @@ import cinema.builder.transaction.{FirstTransaction, SecondTransaction, ThirdTra
 import cinema.exception.SagaBuilderException
 import cinema.saga.builder.SagaBuilder
 import org.scalatest.FlatSpec
-
+import org.scalatest.Matchers.{convertToAnyShouldWrapper, not}
 import scala.language.postfixOps
 
 class SagaBuilderTest extends FlatSpec with CinemaAware {
 
   "Saga builder" should "build saga" in {
-    assert(SagaBuilder()
+    SagaBuilder()
       .transaction(FirstTransaction)
       .transaction(SecondTransaction)
-      .build() != null)
+      .build() should not be null
   }
 
   "Saga builder" should "failure" in {

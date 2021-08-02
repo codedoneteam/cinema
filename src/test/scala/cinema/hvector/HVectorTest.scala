@@ -3,6 +3,7 @@ package cinema.hvector
 import cinema.hvector.HVector.{HNil, HVector, select}
 import cinema.hvector.elements.{Container, DoubleElement}
 import org.scalatest.FlatSpec
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 
 import scala.language.postfixOps
 import scala.reflect.runtime.universe._
@@ -12,19 +13,19 @@ class HVectorTest extends FlatSpec {
 
   "Apply" should "create HVector" in {
     val list = HVector(42)
-    assert(list == 42 :: HNil)
+    list shouldBe 42 :: HNil
   }
 
   "Head" should "get from the list" in {
     val list = 42:: false :: Some("OK") :: 42 :: HNil
     val head = list.head
-    assert(head == (42, typeOf[Int]))
+    head shouldBe (42, typeOf[Int])
   }
 
   "Tail" should "get from the list" in {
     val list = 42:: false :: Some("OK") :: 42 :: HNil
     val tail: HVector = list.tail
-    assert(tail == false :: Some("OK") :: 42 :: HNil)
+    tail shouldBe false :: Some("OK") :: 42 :: HNil
   }
 
   "Select type" should "be found" in {
@@ -54,41 +55,41 @@ class HVectorTest extends FlatSpec {
   "HNil" should "equals HNil" in {
     val x = HNil
     val y = HNil
-    assert(x == y)
+    x shouldBe y
   }
 
   "HVector" should "equals same HVector" in {
     val x = "a" :: 1 :: HNil
     val y = "a" :: 1 :: HNil
-    assert(x == y)
+    x shouldBe y
   }
 
   "HVector" should "be combine with simple HVector" in {
     val x = "a" :: 1 :: HNil
     val y = "b" :: HNil
     val expect = "b" :: "a" :: 1 :: HNil
-    assert(y ++ x == expect)
+    y ++ x shouldBe expect
   }
 
   "HVector" should "be combine HVector with HNil" in {
     val x = "a" :: 1 :: HNil
     val y = HNil
     val expect = "a" :: 1 :: HNil
-    assert(x ++ y == expect)
-    assert(y ++ x == expect)
+    x ++ y shouldBe expect
+    y ++ x shouldBe expect
   }
 
   "HVector" should "be combine HNil with HNil" in {
     val x = HNil
     val y = HNil
     val expect = HNil
-    assert(y ++ x == expect)
+    y ++ x shouldBe expect
   }
 
   "HVector" should "be combine with other HVector" in {
     val x = "a" :: 1 :: HNil
     val y = "b" :: 2 :: HNil
     val expect = "b" :: 2 :: "a" :: 1 :: HNil
-    assert(y ++ x == expect)
+    y ++ x shouldBe expect
   }
 }

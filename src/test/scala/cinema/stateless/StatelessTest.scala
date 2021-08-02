@@ -5,6 +5,7 @@ import cinema.app.CinemaAware
 import cinema.saga.builder.SagaBuilder
 import cinema.stateless.transaction.SomeStatelessTransaction
 import cinema.stateless.transaction.StatelessMessages.{InMessage, OutMessage}
+import org.scalatest.Matchers.convertToAnyShouldWrapper
 import org.scalatest._
 
 import scala.concurrent.Await
@@ -21,6 +22,6 @@ class StatelessTest extends FlatSpec with CinemaAware {
       .run(InMessage())
 
     val result = Await.result(future, 100 seconds)
-    assert(result == OutMessage())
+    result shouldBe OutMessage()
   }
 }
