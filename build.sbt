@@ -1,7 +1,7 @@
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 lazy val scala = "2.13.3"
-lazy val akka = "2.6.8"
+lazy val akka = "2.6.15"
 
 lazy val root = (project in file("."))
   .settings(
