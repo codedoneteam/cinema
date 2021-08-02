@@ -1,20 +1,14 @@
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
-ThisBuild / organization := "net.codedone"
-ThisBuild / description := "cinema"
-ThisBuild / licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-ThisBuild / resolvers  ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots"),
-  Resolver.jcenterRepo
-)
-
 lazy val scala = "2.13.3"
 lazy val akka = "2.6.8"
 
 lazy val root = (project in file("."))
   .settings(
     name := "cinema-framework",
+    organization := "net.codedone",
+    description := "cinema",
+    licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalaVersion := scala,
     publishMavenStyle := true,
     bintrayRepository := "cinema",
@@ -38,6 +32,11 @@ lazy val root = (project in file("."))
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case x => MergeStrategy.first
     },
+    resolvers  ++= Seq(
+      Resolver.sonatypeRepo("releases"),
+      Resolver.sonatypeRepo("snapshots"),
+      Resolver.jcenterRepo
+    ),
     libraryDependencies ++= Seq(
       "org.scala-lang" % "scala-reflect" % scala,
       "com.typesafe.akka" %% "akka-actor-typed" % akka,
